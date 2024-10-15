@@ -23,5 +23,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.30</version>
 		</dependency>
+		<dependency>
+    <groupId>org.modelmapper</groupId>
+    <artifactId>modelmapper</artifactId>
+    <version>3.2.0</version> <!-- or any stable version -->
+</dependency>
+		
 	</dependencies>
 </project>
