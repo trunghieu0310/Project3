@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaweb.builder.BuildingSearchBuilder;
+import com.javaweb.builder.BuildingSearchBuilderCoverter;
 import com.javaweb.converter.BuildingDTOConverter;
 import com.javaweb.model.BuildingDTO;
 import com.javaweb.repository.BuildingRepository;
@@ -24,10 +26,13 @@ public class BuildingServiceImpl implements BuildingService{
 	private BuildingRepository buildingRepository;
 	@Autowired
 	private BuildingDTOConverter buildingDTOConverter;
+	@Autowired
+	private BuildingSearchBuilderCoverter buildingSearchBuilderCoverter;
 	@Override
 	public List<BuildingDTO> findAll(Map<String,Object> params,List<String> typeCode) {
 		// TODO Auto-generated method stub
-		List<BuildingEntity> buildingEntities = buildingRepository.findAll(params,typeCode);
+		BuildingSearchBuilder buildingSearchBuilder = buildingSearchBuilderCoverter.toBuildingSearchBuilder(params,typeCode);
+		List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder);
 		List<BuildingDTO> result = new ArrayList<BuildingDTO>();
 		for(BuildingEntity item : buildingEntities) {
 			BuildingDTO building = buildingDTOConverter.toBuildingDTO(item);
