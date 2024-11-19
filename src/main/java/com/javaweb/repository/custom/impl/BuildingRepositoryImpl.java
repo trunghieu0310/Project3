@@ -1,4 +1,4 @@
-package com.javaweb.repository.impl;
+package com.javaweb.repository.custom.impl;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -17,20 +17,23 @@ import javax.persistence.Query;
 
 import org.apache.tomcat.util.http.parser.Vary;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.model.BuildingDTO;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import com.javaweb.repository.entity.BuildingEntity;
 import com.javaweb.utils.ConnectionJDBCUtil;
 import com.javaweb.utils.NumberUtil;
 import com.javaweb.utils.StringUtil;
 @Repository
+@Primary
 @PropertySource("classpath:application.properties")
 
-public class JBDCBuildingRepositoryImpl implements BuildingRepository{
+public class BuildingRepositoryImpl implements BuildingRepositoryCustom{
 	@PersistenceContext
 	private EntityManager entityManager;
 	@Value("${spring.datasource.url}")
@@ -125,9 +128,9 @@ public class JBDCBuildingRepositoryImpl implements BuildingRepository{
 							where.append(" AND renttype.code IN (" + joinedTypeCode + ")");
 			}
 	 }
-	@Override
+//	@Override
 	public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
-		StringBuilder sql = new StringBuilder("SELECT b.id ,b.name ,b.districtid ,b.street ,b.ward ,b.numberofbasement ,b.floorarea ,b.rentprice ,b.managername ,b.managerphonenumber ,b.servicefee ,b.brokeragefee FROM building b");
+		StringBuilder sql = new StringBuilder("SELECT b.* FROM building b");
 		joinTable(buildingSearchBuilder, sql);
 		System.out.println(sql);
 		StringBuilder where = new StringBuilder(" WHERE 1 = 1");

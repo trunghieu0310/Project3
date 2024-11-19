@@ -95,5 +95,4 @@ public class BuildingEntity {
 	public void setRentPrice(Long rentPrice) {
 		this.rentPrice = rentPrice;
 	}
-	
 }

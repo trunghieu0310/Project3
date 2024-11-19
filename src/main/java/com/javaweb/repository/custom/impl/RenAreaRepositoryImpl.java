@@ -1,4 +1,4 @@
-package com.javaweb.repository.impl;
+package com.javaweb.repository.custom.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,4 +15,5 @@ import com.javaweb.repository.entity.RentAreaEntity;
 import com.javaweb.utils.ConnectionJDBCUtil;
 @Repository
 public class RenAreaRepositoryImpl {
+	
 }
