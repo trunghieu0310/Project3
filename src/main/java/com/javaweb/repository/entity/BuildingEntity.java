@@ -52,8 +52,6 @@ public class BuildingEntity {
 		this.district = district;
 	}
 	
-	
-	
 	public Long getId() {
 		return id;
 	}

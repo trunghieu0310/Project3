@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.tomcat.util.http.parser.Vary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -25,7 +29,10 @@ import com.javaweb.utils.NumberUtil;
 import com.javaweb.utils.StringUtil;
 @Repository
 @PropertySource("classpath:application.properties")
+
 public class JBDCBuildingRepositoryImpl implements BuildingRepository{
+	@PersistenceContext
+	private EntityManager entityManager;
 	@Value("${spring.datasource.url}")
 	private  String URL;
 	@Value("${spring.datasource.username}")
@@ -128,31 +135,32 @@ public class JBDCBuildingRepositoryImpl implements BuildingRepository{
 		querySpecial(buildingSearchBuilder, where);
 		where.append(" GROUP BY b.id ");
 		sql.append(where);
-		List<BuildingEntity> result = new ArrayList<>();
-		try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD)){
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql.toString());
-			while(rs.next()) {
-				BuildingEntity buildingEntity = new BuildingEntity();
-				buildingEntity.setId(rs.getLong("b.id"));
-				buildingEntity.setName(rs.getString("b.name"));
-				buildingEntity.setWard(rs.getString("b.ward"));
-//				buildingEntity.setDistrictId(rs.getLong("b.districtid"));
-				buildingEntity.setStreet(rs.getString("b.street"));
-//				buildingEntity.setFloorArea(rs.getLong("floorarea"));
-				buildingEntity.setRentPrice(rs.getLong("rentPrice"));
-//				buildingEntity.setServiceFee(rs.getString("servicefee"));
-//				buildingEntity.setBrokerageFee(rs.getLong("brokeragefee"));
-				buildingEntity.setManagerName(rs.getString("managerName"));
-				buildingEntity.setManagerPhoneNumber(rs.getString("managerPhoneNumber"));
-				result.add(buildingEntity);
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println("connect fasle");
-		}
-		return result;
+		Query query = entityManager.createNativeQuery(sql.toString(),BuildingEntity.class);
+//		List<BuildingEntity> result = new ArrayList<>();
+//		try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD)){
+//			Statement stmt = conn.createStatement();
+//			ResultSet rs = stmt.executeQuery(sql.toString());
+//			while(rs.next()) {
+//				BuildingEntity buildingEntity = new BuildingEntity();
+//				buildingEntity.setId(rs.getLong("b.id"));
+//				buildingEntity.setName(rs.getString("b.name"));
+//				buildingEntity.setWard(rs.getString("b.ward"));
+////				buildingEntity.setDistrictId(rs.getLong("b.districtid"));
+//				buildingEntity.setStreet(rs.getString("b.street"));
+////				buildingEntity.setFloorArea(rs.getLong("floorarea"));
+//				buildingEntity.setRentPrice(rs.getLong("rentPrice"));
+////				buildingEntity.setServiceFee(rs.getString("servicefee"));
+////				buildingEntity.setBrokerageFee(rs.getLong("brokeragefee"));
+//				buildingEntity.setManagerName(rs.getString("managerName"));
+//				buildingEntity.setManagerPhoneNumber(rs.getString("managerPhoneNumber"));
+//				result.add(buildingEntity);
+//			}
+//			
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("connect fasle");
+//		}
+		return query.getResultList();
 	}
 
 
