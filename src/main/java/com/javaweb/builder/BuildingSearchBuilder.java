@@ -8,9 +8,9 @@ public class BuildingSearchBuilder {
 	private Long floorArea;
 	private String ward,street,districtId;
 	private Integer numberOfBasement;
-	private List<String> typeCode = new ArrayList<>();
-	private String managerName,managerPhoneNumber;
+	private String managerName,managerPhoneNumber,direction,level;
 	private Long rentPriceForm,rentPriceTo,areaForm,areaTo,staffId;
+	private List<String> typeCode = new ArrayList<>();
 	
 	public BuildingSearchBuilder(Builder builder) {
 		this.name = builder.name;
@@ -27,6 +27,8 @@ public class BuildingSearchBuilder {
 		this.areaForm = builder.areaForm;
 		this.areaTo = builder.areaTo;
 		this.staffId = builder.staffId;
+		this.direction = builder.direction;
+		this.level = builder.level;
 	}
 	public String getName() {
 		return name;
@@ -70,13 +72,19 @@ public class BuildingSearchBuilder {
 	public Long getStaffId() {
 		return staffId;
 	}
+	public String getDirection() {
+		return direction;
+	}
+	public String getLevel() {
+		return level;
+	}
 	public static class Builder {
 		private String name;
 		private Long floorArea;
 		private String ward,street,districtId;
 		private Integer numberOfBasement;
 		private List<String> typeCode = new ArrayList<>();
-		private String managerName,managerPhoneNumber;
+		private String managerName,managerPhoneNumber,direction,level;
 		private Long rentPriceForm,rentPriceTo,areaForm,areaTo,staffId;
 		public Builder setName(String name) {
 			this.name = name;
@@ -134,8 +142,17 @@ public class BuildingSearchBuilder {
 			this.staffId = staffId;
 			return this;
 		}
+		public Builder setDirection(String direction) {
+			this.direction = direction;
+			return this;
+		}
+		public Builder setLevel(String level) {
+			this.level = level;
+			return this;
+		}
 		public BuildingSearchBuilder build() {
 			return new BuildingSearchBuilder(this);
 		}
+		
 	}
 }
