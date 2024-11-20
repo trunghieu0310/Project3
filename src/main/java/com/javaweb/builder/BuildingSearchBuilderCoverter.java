@@ -17,6 +17,8 @@ public class BuildingSearchBuilderCoverter {
 														.setDistrictId(MapUtil.getObject(params, "districtId", String.class))
 														.setNumberOfBasement(MapUtil.getObject(params, "numberOfBasement",Integer.class))
 														.setTypeCode(typeCode)
+														.setDirection(MapUtil.getObject(params, "direction", String.class))
+														.setLevel(MapUtil.getObject(params, "level", String.class))
 														.setManagerName(MapUtil.getObject(params, "managerName", String.class))
 														.setManagerPhoneNumber(MapUtil.getObject(params, "managerPhoneNumber", String.class))
 														.setRentPriceTo(MapUtil.getObject(params, "rentPriceTo", Long.class))
@@ -24,12 +26,7 @@ public class BuildingSearchBuilderCoverter {
 														.setAreaTo(MapUtil.getObject(params, "areaTo", Long.class))
 														.setAreaForm(MapUtil.getObject(params, "areaFrom", Long.class))
 														.setStaffId(MapUtil.getObject(params, "staffId", Long.class))
-														.build();
-													
-														
-														
-													
-														
+														.build();								
 				return buildingSearchBuilder;
 	}
 }

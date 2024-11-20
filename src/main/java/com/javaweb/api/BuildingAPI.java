@@ -65,6 +65,7 @@ public class BuildingAPI {
 			DistrictEntity districtEntity = new DistrictEntity();
 			districtEntity.setId(buildingRequestDTO.getDistrictId());
 			buildingEntity.setDistrict(districtEntity);
+//			buildingEntity.setDistrict(buildingRequestDTO.getDistrictId());
 			entityManager.persist(buildingEntity);
 			System.out.println("ok");
 	}
